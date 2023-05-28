@@ -25,7 +25,7 @@ CREATE TABLE funcionario (
 
 CREATE TABLE funcionario_telefone (
 	cpf_func int NOT NULL,
-	telefone int NOT NULL
+	telefone text NOT NULL
 );
 
 CREATE TABLE filial (
@@ -119,18 +119,35 @@ DELETE FROM filme_elenco WHERE ator = 'Jackie Chan';
 DELETE FROM filme_elenco WHERE ator = 'Morgan Freeman';
 DELETE FROM filme_elenco WHERE ator = 'Robert DeNiro';
 
-INSERT INTO funcionario VALUES (11111111111, 'Gerentino Filiano I', '1/1/2001', '1/1/2023', 100),
-(22222222222, 'Gerentino Filiano II', '2/2/2002', '1/1/2023', 101),
-(33333333333, 'Gerentino Filiano III', '3/3/2003', '1/1/2023', 102);
+INSERT INTO funcionario VALUES (11111111, 'Gerentino Filiano I', 'Rua dos Gerentes, 1 - Monte Carmelo, MG', '1/1/2001', '1/1/2023', 101),
+(11111110, 'Fuxonatto Filiano I', 'Rua dos Funcionarios, 1 - Monte Carmelo, MG', '1/1/2001', '1/1/2023', 101),
+(22222222, 'Gerentino Filiano II', 'Rua dos Gerentes, 2 - Monte Carmelo, MG', '2/2/2002', '1/1/2023', 102),
+(22222220, 'Fuxonatto Filiano II', 'Rua dos Funcionarios, 2 - Monte Carmelo, MG', '2/2/2002', '1/1/2023', 102),
+(33333333, 'Gerentino Filiano III', 'Rua dos Gerentes, 3 - Monte Carmelo, MG', '3/3/2003', '1/1/2023', 103),
+(33333330, 'Fuxonatto Filiano III', 'Rua dos Funcionarios, 3 - Monte Carmelo, MG', '3/3/2003', '1/1/2023', 103);
+
+ALTER TABLE funcionario_telefone ADD CONSTRAINT cpf_func_fk FOREIGN KEY (cpf_func) REFERENCES funcionario(cpf);
+
+INSERT INTO funcionario_telefone VALUES (11111111, '(11) 91111-1111'),
+(11111110, '(10) 91111-1110'),
+(22222222, '(22) 92222-2222'),
+(22222220, '(20) 92222-2220'),
+(33333333, '(33) 93333-3333'),
+(33333330, '(30) 93333-3330');
+
+INSERT INTO filial VALUES (101, 'Rua das Filiais, 1 - Monte Carmelo, MG', 11111111),
+(102, 'Rua das Filiais, 2 - Monte Carmelo, MG', 22222222),
+(103, 'Rua das Filiais, 3 - Monte Carmelo, MG', 33333333);
 
 ALTER TABLE filial ADD CONSTRAINT gerente_fk FOREIGN KEY (gerente) REFERENCES funcionario(cpf);
-
-
 ALTER TABLE funcionario ADD CONSTRAINT filial_trabalha_fk FOREIGN KEY (filial_trabalha) REFERENCES filial(id_filial);
-ALTER TABLE funcionario_telefone ADD CONSTRAINT cpf_func_fk FOREIGN KEY (cpf_func) REFERENCES funcionario(cpf);
+
+
 ALTER TABLE cliente_telefone ADD CONSTRAINT cpf_cliente_fk FOREIGN KEY (cpf_cliente) REFERENCES cliente(cpf);
 ALTER TABLE dvd ADD CONSTRAINT filme_fk FOREIGN KEY (filme) REFERENCES filme(id_filme);
 ALTER TABLE dvd ADD CONSTRAINT alugado_por_fk FOREIGN KEY (alugado_por) REFERENCES cliente(cpf);
 
 ALTER TABLE aluguel ADD CONSTRAINT aluguel_filme_fk FOREIGN KEY (filme) REFERENCES filme(id_filme);
 ALTER TABLE aluguel ADD CONSTRAINT aluguel_cliente_fk FOREIGN KEY (cliente) REFERENCES cliente(cpf);
+
+select * from funcionario;
