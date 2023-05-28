@@ -200,7 +200,7 @@ INSERT INTO dvd VALUES (1001, false, 1, '1/1/2023', 101, 11111000),
 (1003, true, 3, '1/1/2023', 101, NULL),
 (2003, true, 3, '1/1/2023', 102, NULL),
 (3003, false, 3, '1/1/2023', 103, 33333300),
-(1004, true, 4, '1/1/2023', 101, 11111100),
+(1004, false, 4, '1/1/2023', 101, 11111100),
 (2004, true, 4, '1/1/2023', 102, NULL),
 (3004, true, 4, '1/1/2023', 103, NULL);
 
@@ -237,5 +237,10 @@ SELECT cpf, nome, telefone FROM funcionario, funcionario_telefone WHERE cpf = cp
 SELECT cpf, nome, telefone FROM cliente, cliente_telefone, cliente_alugueis WHERE cpf = cpf_cliente AND cpf = cliente;
 SELECT nome, produtora FROM filme, filme_produtora WHERE id_filme = filme;
 SELECT id_filial, filial.endereco, nome, telefone FROM filial, funcionario, funcionario_telefone WHERE gerente = cpf AND cpf = cpf_func;
+
+-------------------------------------------------------------------------------------------------------------------------
+
+SELECT nome, produtora FROM filme_produtora RIGHT JOIN filme ON filme = id_filme;
+SELECT id_dvd, aluguel FROM dvd_alugueis RIGHT JOIN dvd ON dvd = id_dvd;
 
 -------------------------------------------------------------------------------------------------------------------------
