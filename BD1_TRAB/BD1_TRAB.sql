@@ -47,13 +47,18 @@ CREATE TABLE cliente (
 	data_cadastro text NOT NULL
 );
 
+CREATE TABLE cliente_telefone (
+    cpf_cliente int NOT NULL,
+	telefone text NOT NULL
+);
+
 CREATE TABLE dvd (
 	id_dvd int PRIMARY KEY,
 	disponivel boolean NOT NULL,
 	filme int NOT NULL,
 	data_criacao text NOT NULL,
 	filial_possui int NOT NULL,
-	alugado_por int NOT NULL
+	alugado_por int
 ); 
 
 CREATE TABLE aluguel (
@@ -69,28 +74,27 @@ CREATE TABLE dvd_alugueis (
 	aluguel int NOT NULL
 ); 
 
-CREATE TABLE cliente_telefone (
-    cpf_cliente int NOT NULL,
-	telefone text NOT NULL
-);
-
 CREATE TABLE cliente_alugueis (
 	cliente int NOT NULL,
-	alugueis int NOT NULL
+	aluguel int NOT NULL
 ); 
 
 -------------------------------------------------------------------------------------------------------------------------
 
-ALTER TABLE dvd_alugueis ADD CONSTRAINT dvd_aluguel_pk PRIMARY KEY (dvd, aluguel);
-ALTER TABLE filme_elenco ADD CONSTRAINT filme_ator_pk PRIMARY KEY (filme, ator);
 ALTER TABLE filme_produtora ADD CONSTRAINT filme_produtora_pk PRIMARY KEY (filme, produtora);
+ALTER TABLE filme_elenco ADD CONSTRAINT filme_elenco_pk PRIMARY KEY (filme, ator);
+ALTER TABLE funcionario_telefone ADD CONSTRAINT funcionario_telefone_pk PRIMARY KEY (cpf_func, telefone);
 ALTER TABLE cliente_telefone ADD CONSTRAINT cliente_telefone_pk PRIMARY KEY (cpf_cliente, telefone);
-ALTER TABLE funcionario_telefone ADD CONSTRAINT func_telefone_pk PRIMARY KEY (cpf_func, telefone);
+ALTER TABLE dvd_alugueis ADD CONSTRAINT dvd_alugueis_pk PRIMARY KEY (dvd, aluguel);
+ALTER TABLE cliente_alugueis ADD CONSTRAINT cliente_alugueis_pk PRIMARY KEY (cliente, aluguel);
+
+-------------------------------------------------------------------------------------------------------------------------
+
 ALTER TABLE filme_elenco ADD CONSTRAINT filme_elenco_fk FOREIGN KEY (filme) REFERENCES filme(id_filme);
 ALTER TABLE filme_produtora ADD CONSTRAINT filme_produtora_fk FOREIGN KEY (filme) REFERENCES filme(id_filme);
-ALTER TABLE funcionario_telefone ADD CONSTRAINT cpf_func_fk FOREIGN KEY (cpf_func) REFERENCES funcionario(cpf);
-ALTER TABLE filial ADD CONSTRAINT gerente_fk FOREIGN KEY (gerente) REFERENCES funcionario(cpf);
-ALTER TABLE cliente_telefone ADD CONSTRAINT cpf_cliente_fk FOREIGN KEY (cpf_cliente) REFERENCES cliente(cpf);
+ALTER TABLE funcionario_telefone ADD CONSTRAINT funcionario_telefone_fk FOREIGN KEY (cpf_func) REFERENCES funcionario(cpf);
+ALTER TABLE filial ADD CONSTRAINT filial_fk FOREIGN KEY (gerente) REFERENCES funcionario(cpf);
+ALTER TABLE cliente_telefone ADD CONSTRAINT cliente_telefone_fk FOREIGN KEY (cpf_cliente) REFERENCES cliente(cpf);
 
 -------------------------------------------------------------------------------------------------------------------------
 
@@ -162,7 +166,7 @@ INSERT INTO funcionario_telefone VALUES (11111111, '(11) 91111-1111'),
 INSERT INTO filial VALUES (101, 'Rua das Filiais, 1 - Monte Carmelo, MG', 11111111),
 (102, 'Rua das Filiais, 2 - Monte Carmelo, MG', 22222222),
 (103, 'Rua das Filiais, 3 - Monte Carmelo, MG', 33333333);
-ALTER TABLE funcionario ADD CONSTRAINT filial_trabalha_fk FOREIGN KEY (filial_trabalha) REFERENCES filial(id_filial);
+ALTER TABLE funcionario ADD CONSTRAINT funcionario_filial_trabalha_fk FOREIGN KEY (filial_trabalha) REFERENCES filial(id_filial);
 
 -------------------------------------------------------------------------------------------------------------------------
 
@@ -182,9 +186,9 @@ INSERT INTO cliente_telefone VALUES (11111100, '(11) 91111-1100'),
 
 -------------------------------------------------------------------------------------------------------------------------
 
-
+ALTER TABLE dvd ADD CONSTRAINT dvd_filial_fk FOREIGN KEY (alugado_por) REFERENCES cliente(cpf);
 ALTER TABLE dvd ADD CONSTRAINT dvd_filme_fk FOREIGN KEY (filme) REFERENCES filme(id_filme);
-ALTER TABLE dvd ADD CONSTRAINT alugado_por_fk FOREIGN KEY (alugado_por) REFERENCES cliente(cpf);
+ALTER TABLE dvd ADD CONSTRAINT dvd_alugado_por_fk FOREIGN KEY (alugado_por) REFERENCES cliente(cpf);
 ALTER TABLE aluguel ADD CONSTRAINT aluguel_filme_fk FOREIGN KEY (filme) REFERENCES filme(id_filme);
 ALTER TABLE aluguel ADD CONSTRAINT aluguel_cliente_fk FOREIGN KEY (cliente) REFERENCES cliente(cpf);
 
