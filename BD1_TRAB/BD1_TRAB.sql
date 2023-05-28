@@ -79,6 +79,8 @@ CREATE TABLE cliente_alugueis (
 	alugueis int NOT NULL
 ); 
 
+-------------------------------------------------------------------------------------------------------------------------
+
 ALTER TABLE dvd_alugueis ADD CONSTRAINT dvd_aluguel_pk PRIMARY KEY (dvd, aluguel);
 ALTER TABLE filme_elenco ADD CONSTRAINT filme_ator_pk PRIMARY KEY (filme, ator);
 ALTER TABLE filme_produtora ADD CONSTRAINT filme_produtora_pk PRIMARY KEY (filme, produtora);
@@ -88,6 +90,9 @@ ALTER TABLE filme_elenco ADD CONSTRAINT filme_elenco_fk FOREIGN KEY (filme) REFE
 ALTER TABLE filme_produtora ADD CONSTRAINT filme_produtora_fk FOREIGN KEY (filme) REFERENCES filme(id_filme);
 ALTER TABLE funcionario_telefone ADD CONSTRAINT cpf_func_fk FOREIGN KEY (cpf_func) REFERENCES funcionario(cpf);
 ALTER TABLE filial ADD CONSTRAINT gerente_fk FOREIGN KEY (gerente) REFERENCES funcionario(cpf);
+ALTER TABLE cliente_telefone ADD CONSTRAINT cpf_cliente_fk FOREIGN KEY (cpf_cliente) REFERENCES cliente(cpf);
+
+-------------------------------------------------------------------------------------------------------------------------
 
 INSERT INTO filme VALUES (1, 'Duna', 'Denis Villeneuve', '21/10/2021', 'Ficção Científica', 'Paul Atreides é um jovem brilhante, dono de um destino além de sua compreensão. Ele deve viajar para o planeta mais perigoso do universo para garantir o futuro de seu povo.'),
 (2, 'Duna 2', 'Denis Vileneuve', '02/11/2023', 'Ficção Científica', 'Paul Atreides se une a Chani e aos Fremen enquanto busca vingança contra os conspiradores que destruíram sua família. Enfrentando uma escolha entre o amor de sua vida e o destino do universo, ele deve evitar um futuro terrível que só ele pode prever.'),
@@ -102,9 +107,13 @@ INSERT INTO filme VALUES (1, 'Duna', 'Denis Villeneuve', '21/10/2021', 'Ficção
 (11, 'Pulp Fiction', 'Quentin Tortinho', '03/03/1995', 'Drama', 'Assassino que trabalha para a máfia se apaixona pela esposa de seu chefe quando é convidado a acompanhá-la, um boxeador descumpre sua promessa de perder uma luta e um casal tenta um assalto que rapidamente sai do controle.'),
 (12, 'Django Livre', 'Quentin Tarantino', '18/01/2023', 'Faroeste', 'No sul dos Estados Unidos, o ex-escravo Django faz uma aliança inesperada com o caçador de recompensas Schultz para caçar os criminosos mais procurados do país e resgatar sua esposa de um fazendeiro que força seus escravos a participar de competições mortais.');
 
+-------------------------------------------------------------------------------------------------------------------------
+
 UPDATE filme SET diretor = 'Denis Villenueve' WHERE diretor = 'Denis Vilenueve';
 UPDATE filme SET data_lancamento = '18/01/2013' WHERE data_lancamento = '18/01/2023';
 UPDATE filme SET diretor = 'Quentin Tarantino' WHERE diretor = 'Quentin Tortinho';
+
+-------------------------------------------------------------------------------------------------------------------------
 
 INSERT INTO filme_elenco VALUES (1, 'Timothée Chalamet'),
 (1, 'Rebecca Ferguson'),
@@ -126,9 +135,13 @@ INSERT INTO filme_produtora VALUES (1, 'Warner Bros. Entertainment'),
 (5, 'Paramount Pictures'),
 (5, 'Legendary Pictures');
 
+-------------------------------------------------------------------------------------------------------------------------
+
 DELETE FROM filme_elenco WHERE ator = 'Jackie Chan';
 DELETE FROM filme_elenco WHERE ator = 'Morgan Freeman';
 DELETE FROM filme_elenco WHERE ator = 'Robert DeNiro';
+
+-------------------------------------------------------------------------------------------------------------------------
 
 INSERT INTO funcionario VALUES (11111111, 'Gerentino Filiano I', 'Rua dos Gerentes, 1 - Monte Carmelo, MG', '1/1/2001', '1/1/2023', 101),
 (11111110, 'Fuxonatto Filiano I', 'Rua dos Funcionarios, 1 - Monte Carmelo, MG', '1/1/2001', '1/1/2023', 101),
@@ -137,17 +150,21 @@ INSERT INTO funcionario VALUES (11111111, 'Gerentino Filiano I', 'Rua dos Gerent
 (33333333, 'Gerentino Filiano III', 'Rua dos Gerentes, 3 - Monte Carmelo, MG', '3/3/2003', '1/1/2023', 103),
 (33333330, 'Fuxonatto Filiano III', 'Rua dos Funcionarios, 3 - Monte Carmelo, MG', '3/3/2003', '1/1/2023', 103);
 
-
 INSERT INTO funcionario_telefone VALUES (11111111, '(11) 91111-1111'),
-(11111110, '(10) 91111-1110'),
+(11111110, '(11) 91111-1110'),
 (22222222, '(22) 92222-2222'),
-(22222220, '(20) 92222-2220'),
+(22222220, '(22) 92222-2220'),
 (33333333, '(33) 93333-3333'),
-(33333330, '(30) 93333-3330');
+(33333330, '(33) 93333-3330');
+
+-------------------------------------------------------------------------------------------------------------------------
 
 INSERT INTO filial VALUES (101, 'Rua das Filiais, 1 - Monte Carmelo, MG', 11111111),
 (102, 'Rua das Filiais, 2 - Monte Carmelo, MG', 22222222),
 (103, 'Rua das Filiais, 3 - Monte Carmelo, MG', 33333333);
+ALTER TABLE funcionario ADD CONSTRAINT filial_trabalha_fk FOREIGN KEY (filial_trabalha) REFERENCES filial(id_filial);
+
+-------------------------------------------------------------------------------------------------------------------------
 
 INSERT INTO cliente VALUES (11111100, 'Clientino Filiano I', 'Rua dos Clientes, 1 - Monte Carmelo, MG', '1/1/2001', '1/1/2023'),
 (11111000, 'Clientina Filiana I', 'Rua dos Clientes, 1 - Monte Carmelo, MG', '1/1/2001', '1/1/2023'),
@@ -156,13 +173,18 @@ INSERT INTO cliente VALUES (11111100, 'Clientino Filiano I', 'Rua dos Clientes, 
 (33333300, 'Clientino Filiano III', 'Rua dos Clientes, 3 - Monte Carmelo, MG', '3/3/2003', '1/1/2023'),
 (33333000, 'Clientina Filiana III', 'Rua dos Clientes, 3 - Monte Carmelo, MG', '3/3/2003', '1/1/2023');
 
-ALTER TABLE funcionario ADD CONSTRAINT filial_trabalha_fk FOREIGN KEY (filial_trabalha) REFERENCES filial(id_filial);
+INSERT INTO cliente_telefone VALUES (11111100, '(11) 91111-1100'),
+(11111000, '(11) 91111-1000'),
+(22222200, '(22) 92222-2200'),
+(22222000, '(22) 92222-2000'),
+(33333300, '(33) 93333-3300'),
+(33333000, '(33) 93333-3000');
+
+-------------------------------------------------------------------------------------------------------------------------
 
 
-ALTER TABLE cliente_telefone ADD CONSTRAINT cpf_cliente_fk FOREIGN KEY (cpf_cliente) REFERENCES cliente(cpf);
 ALTER TABLE dvd ADD CONSTRAINT dvd_filme_fk FOREIGN KEY (filme) REFERENCES filme(id_filme);
 ALTER TABLE dvd ADD CONSTRAINT alugado_por_fk FOREIGN KEY (alugado_por) REFERENCES cliente(cpf);
-
 ALTER TABLE aluguel ADD CONSTRAINT aluguel_filme_fk FOREIGN KEY (filme) REFERENCES filme(id_filme);
 ALTER TABLE aluguel ADD CONSTRAINT aluguel_cliente_fk FOREIGN KEY (cliente) REFERENCES cliente(cpf);
 
