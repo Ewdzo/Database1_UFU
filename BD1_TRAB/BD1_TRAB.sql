@@ -95,6 +95,11 @@ ALTER TABLE filme_produtora ADD CONSTRAINT filme_produtora_fk FOREIGN KEY (filme
 ALTER TABLE funcionario_telefone ADD CONSTRAINT funcionario_telefone_fk FOREIGN KEY (cpf_func) REFERENCES funcionario(cpf);
 ALTER TABLE filial ADD CONSTRAINT filial_fk FOREIGN KEY (gerente) REFERENCES funcionario(cpf);
 ALTER TABLE cliente_telefone ADD CONSTRAINT cliente_telefone_fk FOREIGN KEY (cpf_cliente) REFERENCES cliente(cpf);
+ALTER TABLE dvd ADD CONSTRAINT dvd_filial_possui_fk FOREIGN KEY (filial_possui) REFERENCES filial(id_filial);
+ALTER TABLE dvd ADD CONSTRAINT dvd_alugado_por_fk FOREIGN KEY (alugado_por) REFERENCES cliente(cpf);
+ALTER TABLE dvd ADD CONSTRAINT dvd_filme_fk FOREIGN KEY (filme) REFERENCES filme(id_filme);
+ALTER TABLE aluguel ADD CONSTRAINT aluguel_filme_fk FOREIGN KEY (filme) REFERENCES filme(id_filme);
+ALTER TABLE aluguel ADD CONSTRAINT aluguel_cliente_fk FOREIGN KEY (cliente) REFERENCES cliente(cpf);
 
 -------------------------------------------------------------------------------------------------------------------------
 
@@ -186,10 +191,44 @@ INSERT INTO cliente_telefone VALUES (11111100, '(11) 91111-1100'),
 
 -------------------------------------------------------------------------------------------------------------------------
 
-ALTER TABLE dvd ADD CONSTRAINT dvd_filial_fk FOREIGN KEY (alugado_por) REFERENCES cliente(cpf);
-ALTER TABLE dvd ADD CONSTRAINT dvd_filme_fk FOREIGN KEY (filme) REFERENCES filme(id_filme);
-ALTER TABLE dvd ADD CONSTRAINT dvd_alugado_por_fk FOREIGN KEY (alugado_por) REFERENCES cliente(cpf);
-ALTER TABLE aluguel ADD CONSTRAINT aluguel_filme_fk FOREIGN KEY (filme) REFERENCES filme(id_filme);
-ALTER TABLE aluguel ADD CONSTRAINT aluguel_cliente_fk FOREIGN KEY (cliente) REFERENCES cliente(cpf);
+INSERT INTO dvd VALUES (1001, false, 1, '1/1/2023', 101, 11111000),
+(2001, false, 1, '1/1/2023', 102, 22222200),
+(3001, false, 1, '1/1/2023', 103, 33333000),
+(1002, true, 2, '1/1/2023', 101, NULL),
+(2002, false, 2, '1/1/2023', 102, 22222000),
+(3002, true, 2, '1/1/2023', 103, NULL),
+(1003, true, 3, '1/1/2023', 101, NULL),
+(2003, true, 3, '1/1/2023', 102, NULL),
+(3003, false, 3, '1/1/2023', 103, 33333300),
+(1004, true, 4, '1/1/2023', 101, 11111100),
+(2004, true, 4, '1/1/2023', 102, NULL),
+(3004, true, 4, '1/1/2023', 103, NULL);
 
-select * from funcionario;
+-------------------------------------------------------------------------------------------------------------------------
+
+INSERT INTO aluguel VALUES (11001, '1/1/2023', '8/1/2023', 1, 11111000),
+(22001, '1/1/2023', '8/1/2023', 1, 22222200),
+(33001, '1/1/2023', '8/1/2023', 1, 33333000),
+(22002, '1/1/2023', '8/1/2023', 2, 22222000),
+(33003, '1/1/2023', '8/1/2023', 3, 33333300),
+(11004, '1/1/2023', '8/1/2023', 4, 11111100);
+
+-------------------------------------------------------------------------------------------------------------------------
+
+INSERT INTO dvd_alugueis VALUES (1001, 11001),
+(2001, 22001),
+(3001, 33001),
+(2002, 22002),
+(3003, 33003),
+(1004, 11004);
+
+-------------------------------------------------------------------------------------------------------------------------
+
+INSERT INTO cliente_alugueis VALUES (11111000, 11001),
+(22222200, 22001),
+(33333000, 33001),
+(22222000, 22002),
+(33333300, 33003),
+(11111100, 11004);
+
+-------------------------------------------------------------------------------------------------------------------------
