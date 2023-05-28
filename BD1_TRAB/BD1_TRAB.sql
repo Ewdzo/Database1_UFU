@@ -64,7 +64,6 @@ CREATE TABLE aluguel (
 	cliente int NOT NULL
 ); 
 
-
 CREATE TABLE dvd_alugueis (
 	dvd int NOT NULL,
 	aluguel int NOT NULL
@@ -86,6 +85,9 @@ ALTER TABLE filme_produtora ADD CONSTRAINT filme_produtora_pk PRIMARY KEY (filme
 ALTER TABLE cliente_telefone ADD CONSTRAINT cliente_telefone_pk PRIMARY KEY (cpf_cliente, telefone);
 ALTER TABLE funcionario_telefone ADD CONSTRAINT func_telefone_pk PRIMARY KEY (cpf_func, telefone);
 ALTER TABLE filme_elenco ADD CONSTRAINT filme_elenco_fk FOREIGN KEY (filme) REFERENCES filme(id_filme);
+ALTER TABLE filme_produtora ADD CONSTRAINT filme_produtora_fk FOREIGN KEY (filme) REFERENCES filme(id_filme);
+ALTER TABLE funcionario_telefone ADD CONSTRAINT cpf_func_fk FOREIGN KEY (cpf_func) REFERENCES funcionario(cpf);
+ALTER TABLE filial ADD CONSTRAINT gerente_fk FOREIGN KEY (gerente) REFERENCES funcionario(cpf);
 
 INSERT INTO filme VALUES (1, 'Duna', 'Denis Villeneuve', '21/10/2021', 'Ficção Científica', 'Paul Atreides é um jovem brilhante, dono de um destino além de sua compreensão. Ele deve viajar para o planeta mais perigoso do universo para garantir o futuro de seu povo.'),
 (2, 'Duna 2', 'Denis Vileneuve', '02/11/2023', 'Ficção Científica', 'Paul Atreides se une a Chani e aos Fremen enquanto busca vingança contra os conspiradores que destruíram sua família. Enfrentando uma escolha entre o amor de sua vida e o destino do universo, ele deve evitar um futuro terrível que só ele pode prever.'),
@@ -116,8 +118,6 @@ INSERT INTO filme_elenco VALUES (1, 'Timothée Chalamet'),
 (8, 'Morgan Freeman'),
 (11, 'Jackie Chan');
 
-ALTER TABLE filme_produtora ADD CONSTRAINT filme_produtora_fk FOREIGN KEY (filme) REFERENCES filme(id_filme);
-
 INSERT INTO filme_produtora VALUES (1, 'Warner Bros. Entertainment'),
 (1, 'Legendary Pictures'),
 (2, 'Warner Bros. Entertainment'),
@@ -137,7 +137,6 @@ INSERT INTO funcionario VALUES (11111111, 'Gerentino Filiano I', 'Rua dos Gerent
 (33333333, 'Gerentino Filiano III', 'Rua dos Gerentes, 3 - Monte Carmelo, MG', '3/3/2003', '1/1/2023', 103),
 (33333330, 'Fuxonatto Filiano III', 'Rua dos Funcionarios, 3 - Monte Carmelo, MG', '3/3/2003', '1/1/2023', 103);
 
-ALTER TABLE funcionario_telefone ADD CONSTRAINT cpf_func_fk FOREIGN KEY (cpf_func) REFERENCES funcionario(cpf);
 
 INSERT INTO funcionario_telefone VALUES (11111111, '(11) 91111-1111'),
 (11111110, '(10) 91111-1110'),
@@ -150,7 +149,13 @@ INSERT INTO filial VALUES (101, 'Rua das Filiais, 1 - Monte Carmelo, MG', 111111
 (102, 'Rua das Filiais, 2 - Monte Carmelo, MG', 22222222),
 (103, 'Rua das Filiais, 3 - Monte Carmelo, MG', 33333333);
 
-ALTER TABLE filial ADD CONSTRAINT gerente_fk FOREIGN KEY (gerente) REFERENCES funcionario(cpf);
+INSERT INTO cliente VALUES (11111100, 'Clientino Filiano I', 'Rua dos Clientes, 1 - Monte Carmelo, MG', '1/1/2001', '1/1/2023'),
+(11111000, 'Clientina Filiana I', 'Rua dos Clientes, 1 - Monte Carmelo, MG', '1/1/2001', '1/1/2023'),
+(22222200, 'Clientino Filiano II', 'Rua dos Clientes, 2- Monte Carmelo, MG', '2/2/2002', '1/1/2023'),
+(22222000, 'Clientina Filiana II', 'Rua dos Clientes, 2 - Monte Carmelo, MG', '2/2/2002', '1/1/2023'),
+(33333300, 'Clientino Filiano III', 'Rua dos Clientes, 3 - Monte Carmelo, MG', '3/3/2003', '1/1/2023'),
+(33333000, 'Clientina Filiana III', 'Rua dos Clientes, 3 - Monte Carmelo, MG', '3/3/2003', '1/1/2023');
+
 ALTER TABLE funcionario ADD CONSTRAINT filial_trabalha_fk FOREIGN KEY (filial_trabalha) REFERENCES filial(id_filial);
 
 
