@@ -9,6 +9,11 @@ CREATE TABLE filme (
 	descricao text NOT NULL
 );
 
+CREATE TABLE filme_elenco (
+    filme int NOT NULL,
+	ator text NOT NULL
+);
+
 CREATE TABLE cliente (
 	cpf int PRIMARY KEY,
 	endereco text NOT NULL,
@@ -47,11 +52,6 @@ CREATE TABLE aluguel (
 	cliente int NOT NULL
 ); 
 
-CREATE TABLE filme_elenco (
-    filme int NOT NULL,
-	ator text NOT NULL
-);
-
 CREATE TABLE filme_produtora (
     filme int NOT NULL,
 	produtora text NOT NULL
@@ -82,6 +82,7 @@ ALTER TABLE filme_elenco ADD CONSTRAINT filme_ator_pk PRIMARY KEY (filme, ator);
 ALTER TABLE filme_produtora ADD CONSTRAINT filme_produtora_pk PRIMARY KEY (filme, produtora);
 ALTER TABLE cliente_telefone ADD CONSTRAINT cliente_telefone_pk PRIMARY KEY (cpf_cliente, telefone);
 ALTER TABLE funcionario_telefone ADD CONSTRAINT func_telefone_pk PRIMARY KEY (cpf_func, telefone);
+ALTER TABLE filme_elenco ADD CONSTRAINT filme_elenco_fk FOREIGN KEY (filme) REFERENCES filme(id_filme);
 
 INSERT INTO filme VALUES (1, 'Duna', 'Denis Villeneuve', '21/10/2021', 'Ficção Científica', 'Paul Atreides é um jovem brilhante, dono de um destino além de sua compreensão. Ele deve viajar para o planeta mais perigoso do universo para garantir o futuro de seu povo.'),
 (2, 'Duna 2', 'Denis Vileneuve', '02/11/2023', 'Ficção Científica', 'Paul Atreides se une a Chani e aos Fremen enquanto busca vingança contra os conspiradores que destruíram sua família. Enfrentando uma escolha entre o amor de sua vida e o destino do universo, ele deve evitar um futuro terrível que só ele pode prever.'),
@@ -100,6 +101,22 @@ UPDATE filme SET diretor = 'Denis Villenueve' WHERE diretor = 'Denis Vilenueve';
 UPDATE filme SET data_lancamento = '18/01/2013' WHERE data_lancamento = '18/01/2023';
 UPDATE filme SET diretor = 'Quentin Tarantino' WHERE diretor = 'Quentin Tortinho';
 
+INSERT INTO filme_elenco VALUES (1, 'Timothée Chalamet'),
+(1, 'Rebecca Ferguson'),
+(2, 'Timothée Chalamet'),
+(2, 'Zendaya'),
+(3, 'Harrison Ford'),
+(4, 'Ryan Gosling'),
+(5, 'Anne Hathaway'),
+(6, 'Cillian Murphy'),
+(7, 'Robert DeNiro'),
+(8, 'Morgan Freeman'),
+(11, 'Jackie Chan');
+
+DELETE FROM filme_elenco WHERE ator = 'Jackie Chan';
+DELETE FROM filme_elenco WHERE ator = 'Morgan Freeman';
+DELETE FROM filme_elenco WHERE ator = 'Robert DeNiro';
+
 
 ALTER TABLE funcionario ADD CONSTRAINT filial_trabalha_fk FOREIGN KEY (filial_trabalha) REFERENCES filial(id_filial);
 ALTER TABLE funcionario_telefone ADD CONSTRAINT cpf_func_fk FOREIGN KEY (cpf_func) REFERENCES funcionario(cpf);
@@ -107,7 +124,6 @@ ALTER TABLE cliente_telefone ADD CONSTRAINT cpf_cliente_fk FOREIGN KEY (cpf_clie
 ALTER TABLE filial ADD CONSTRAINT gerente_fk FOREIGN KEY (gerente) REFERENCES funcionario(cpf);
 ALTER TABLE dvd ADD CONSTRAINT filme_fk FOREIGN KEY (filme) REFERENCES filme(id_filme);
 ALTER TABLE dvd ADD CONSTRAINT alugado_por_fk FOREIGN KEY (alugado_por) REFERENCES cliente(cpf);
-ALTER TABLE filme_elenco ADD CONSTRAINT filme_elenco_fk FOREIGN KEY (filme) REFERENCES filme(id_filme);
 
 ALTER TABLE aluguel ADD CONSTRAINT aluguel_filme_fk FOREIGN KEY (filme) REFERENCES filme(id_filme);
 ALTER TABLE aluguel ADD CONSTRAINT aluguel_cliente_fk FOREIGN KEY (cliente) REFERENCES cliente(cpf);
