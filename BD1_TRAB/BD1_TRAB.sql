@@ -9,6 +9,11 @@ CREATE TABLE filme (
 	descricao text NOT NULL
 );
 
+CREATE TABLE filme_produtora (
+    filme int NOT NULL,
+	produtora text NOT NULL
+);
+
 CREATE TABLE filme_elenco (
     filme int NOT NULL,
 	ator text NOT NULL
@@ -59,10 +64,6 @@ CREATE TABLE aluguel (
 	cliente int NOT NULL
 ); 
 
-CREATE TABLE filme_produtora (
-    filme int NOT NULL,
-	produtora text NOT NULL
-);
 
 CREATE TABLE dvd_alugueis (
 	dvd int NOT NULL,
@@ -115,6 +116,16 @@ INSERT INTO filme_elenco VALUES (1, 'Timothée Chalamet'),
 (8, 'Morgan Freeman'),
 (11, 'Jackie Chan');
 
+ALTER TABLE filme_produtora ADD CONSTRAINT filme_produtora_fk FOREIGN KEY (filme) REFERENCES filme(id_filme);
+
+INSERT INTO filme_produtora VALUES (1, 'Warner Bros. Entertainment'),
+(1, 'Legendary Pictures'),
+(2, 'Warner Bros. Entertainment'),
+(4, 'Warner Bros. Entertainment'),
+(5, 'Warner Bros. Entertainment'),
+(5, 'Paramount Pictures'),
+(5, 'Legendary Pictures');
+
 DELETE FROM filme_elenco WHERE ator = 'Jackie Chan';
 DELETE FROM filme_elenco WHERE ator = 'Morgan Freeman';
 DELETE FROM filme_elenco WHERE ator = 'Robert DeNiro';
@@ -144,7 +155,7 @@ ALTER TABLE funcionario ADD CONSTRAINT filial_trabalha_fk FOREIGN KEY (filial_tr
 
 
 ALTER TABLE cliente_telefone ADD CONSTRAINT cpf_cliente_fk FOREIGN KEY (cpf_cliente) REFERENCES cliente(cpf);
-ALTER TABLE dvd ADD CONSTRAINT filme_fk FOREIGN KEY (filme) REFERENCES filme(id_filme);
+ALTER TABLE dvd ADD CONSTRAINT dvd_filme_fk FOREIGN KEY (filme) REFERENCES filme(id_filme);
 ALTER TABLE dvd ADD CONSTRAINT alugado_por_fk FOREIGN KEY (alugado_por) REFERENCES cliente(cpf);
 
 ALTER TABLE aluguel ADD CONSTRAINT aluguel_filme_fk FOREIGN KEY (filme) REFERENCES filme(id_filme);
