@@ -177,7 +177,7 @@ ALTER TABLE funcionario ADD CONSTRAINT funcionario_filial_trabalha_fk FOREIGN KE
 
 INSERT INTO cliente VALUES (11111100, 'Clientino Filiano I', 'Rua dos Clientes, 1 - Monte Carmelo, MG', '1/1/2001', '1/1/2023'),
 (11111000, 'Clientina Filiana I', 'Rua dos Clientes, 1 - Monte Carmelo, MG', '1/1/2001', '1/1/2023'),
-(22222200, 'Clientino Filiano II', 'Rua dos Clientes, 2- Monte Carmelo, MG', '2/2/2002', '1/1/2023'),
+(22222200, 'Clientino Filiano II', 'Rua dos Clientes, 2 - Monte Carmelo, MG', '2/2/2002', '1/1/2023'),
 (22222000, 'Clientina Filiana II', 'Rua dos Clientes, 2 - Monte Carmelo, MG', '2/2/2002', '1/1/2023'),
 (33333300, 'Clientino Filiano III', 'Rua dos Clientes, 3 - Monte Carmelo, MG', '3/3/2003', '1/1/2023'),
 (33333000, 'Clientina Filiana III', 'Rua dos Clientes, 3 - Monte Carmelo, MG', '3/3/2003', '1/1/2023');
@@ -242,5 +242,10 @@ SELECT id_filial, filial.endereco, nome, telefone FROM filial, funcionario, func
 
 SELECT nome, produtora FROM filme_produtora RIGHT JOIN filme ON filme = id_filme;
 SELECT id_dvd, aluguel FROM dvd_alugueis RIGHT JOIN dvd ON dvd = id_dvd;
+
+-------------------------------------------------------------------------------------------------------------------------
+
+SELECT COUNT(cpf), endereco FROM cliente GROUP BY endereco;
+SELECT COUNT(cpf), endereco FROM funcionario GROUP BY endereco;
 
 -------------------------------------------------------------------------------------------------------------------------
