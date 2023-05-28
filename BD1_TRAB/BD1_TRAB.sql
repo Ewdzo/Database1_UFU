@@ -232,3 +232,10 @@ INSERT INTO cliente_alugueis VALUES (11111000, 11001),
 (11111100, 11004);
 
 -------------------------------------------------------------------------------------------------------------------------
+
+SELECT cpf, nome, telefone FROM funcionario, funcionario_telefone WHERE cpf = cpf_func;
+SELECT cpf, nome, telefone FROM cliente, cliente_telefone, cliente_alugueis WHERE cpf = cpf_cliente AND cpf = cliente;
+SELECT nome, produtora FROM filme, filme_produtora WHERE id_filme = filme;
+SELECT id_filial, filial.endereco, nome, telefone FROM filial, funcionario, funcionario_telefone WHERE gerente = cpf AND cpf = cpf_func;
+
+-------------------------------------------------------------------------------------------------------------------------
