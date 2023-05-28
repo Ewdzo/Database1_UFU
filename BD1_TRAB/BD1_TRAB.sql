@@ -249,3 +249,8 @@ SELECT COUNT(cpf), endereco FROM cliente GROUP BY endereco;
 SELECT COUNT(cpf), endereco FROM funcionario GROUP BY endereco;
 
 -------------------------------------------------------------------------------------------------------------------------
+
+SELECT cpf_cliente AS CPF, telefone FROM cliente_telefone UNION SELECT cpf_func AS CPF, telefone FROM funcionario_telefone ORDER BY CPF;
+SELECT cpf, nome, endereco FROM cliente UNION SELECT cpf, nome, endereco FROM funcionario ORDER BY CPF;
+
+-------------------------------------------------------------------------------------------------------------------------
