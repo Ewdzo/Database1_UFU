@@ -254,3 +254,8 @@ SELECT cpf_cliente AS CPF, telefone FROM cliente_telefone UNION SELECT cpf_func 
 SELECT cpf, nome, endereco FROM cliente UNION SELECT cpf, nome, endereco FROM funcionario ORDER BY CPF;
 
 -------------------------------------------------------------------------------------------------------------------------
+
+SELECT * FROM (SELECT cpf, nome, endereco FROM cliente UNION SELECT cpf, nome, endereco FROM funcionario ORDER BY CPF) AS enderecos WHERE endereco NOT IN (SELECT endereco FROM (SELECT cpf, nome, endereco FROM cliente UNION SELECT cpf, nome, endereco FROM funcionario ORDER BY CPF) AS enderecos WHERE endereco LIKE 'Rua dos Gerentes%');
+SELECT * FROM (SELECT cpf_cliente AS CPF, telefone FROM cliente_telefone UNION SELECT cpf_func AS CPF, telefone FROM funcionario_telefone ORDER BY CPF) AS telefones WHERE telefone NOT IN (SELECT telefone FROM cliente_telefone UNION SELECT telefone FROM funcionario_telefone WHERE telefone LIKE '(11)%');
+
+-------------------------------------------------------------------------------------------------------------------------
