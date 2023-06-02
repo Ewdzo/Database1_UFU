@@ -256,6 +256,6 @@ SELECT cpf, nome, endereco FROM cliente UNION SELECT cpf, nome, endereco FROM fu
 -------------------------------------------------------------------------------------------------------------------------
 
 SELECT * FROM (SELECT cpf, nome, endereco FROM cliente UNION SELECT cpf, nome, endereco FROM funcionario ORDER BY CPF) AS enderecos WHERE endereco NOT IN (SELECT endereco FROM (SELECT cpf, nome, endereco FROM cliente UNION SELECT cpf, nome, endereco FROM funcionario ORDER BY CPF) AS enderecos WHERE endereco LIKE 'Rua dos Gerentes%');
-SELECT nome FROM filme WHERE EXISTS (SELECT produtora FROM filme_produtora WHERE filme.id_filme = filme_produtora.filme AND produtora LIKE '%Pictures');
+SELECT nome FROM filme WHERE EXISTS (SELECT produtora FROM filme_produtora WHERE filme.id_filme = filme_produtora.filme AND produtora LIKE 'Warner%');
 
 -------------------------------------------------------------------------------------------------------------------------
